@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trolley", "src\Trolley.csproj", "{566AF30A-9127-4C00-A06E-D2ED3FE1E650}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trolley.Dependencies", "dependencies\Trolley.Dependencies.csproj", "{09A10845-4B4E-49AB-9BE0-449318617FB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trolley.Tests", "test\Trolley.Tests.csproj", "{8B6BA1A4-AF59-44A4-A268-2EA39116BF3B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{566AF30A-9127-4C00-A06E-D2ED3FE1E650}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{566AF30A-9127-4C00-A06E-D2ED3FE1E650}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{566AF30A-9127-4C00-A06E-D2ED3FE1E650}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{566AF30A-9127-4C00-A06E-D2ED3FE1E650}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09A10845-4B4E-49AB-9BE0-449318617FB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09A10845-4B4E-49AB-9BE0-449318617FB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09A10845-4B4E-49AB-9BE0-449318617FB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09A10845-4B4E-49AB-9BE0-449318617FB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B6BA1A4-AF59-44A4-A268-2EA39116BF3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B6BA1A4-AF59-44A4-A268-2EA39116BF3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B6BA1A4-AF59-44A4-A268-2EA39116BF3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B6BA1A4-AF59-44A4-A268-2EA39116BF3B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

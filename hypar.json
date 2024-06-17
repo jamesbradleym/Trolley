@@ -1,0 +1,73 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "id": "4b835ad5-17ae-421e-bf31-4dced599b88a",
+  "name": "trolley",
+  "description": "The Trolley function.",
+  "language": "C#",
+  "overrides": {
+    "Item": {
+      "$hyparOrder": 0,
+      "context": "[*discriminator=Elements.Item]",
+      "identity": {
+        "Add Id": {
+          "type": "string"
+        }
+      },
+      "behaviors": {
+        "add": true,
+        "remove": true
+      },
+      "schema": {
+        "Name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "$hyparOrder": 0
+        },
+        "Difficulty": {
+          "description": "The time it should take for this element to update in seconds.",
+          "$hyparOrder": 1,
+          "type": "integer",
+          "default": 1,
+          "minimum": 1,
+          "maximum": 10
+        },
+        "Transform": {
+          "$hyparOrder": 2,
+          "$ref": "https://schemas.hypar.io/Transform.json"
+        },
+        "Locked": {
+          "description": "If this element is 'Locked', it will not be recalculated",
+          "type": "boolean",
+          "$hyparOrder": 10
+        },
+        "Self": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "$hyparShowIf": {
+            "conditions": [
+              {
+                "property": "Self",
+                "value": null
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "outputs": [
+    {
+      "unit_type": "volume",
+      "name": "Volume",
+      "description": "The volume.",
+      "type": "number"
+    }
+  ],
+  "repository_url": "https://github.com/hypar-io/function",
+  "last_updated": "0001-01-01T00:00:00",
+  "cli_version": "1.11.0-alpha.18"
+}
