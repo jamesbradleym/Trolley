@@ -8,12 +8,19 @@ using Namotion.Reflection;
 
 namespace Elements
 {
+    public class MiniItem
+    {
+        public int Result { get; set; }
+    }
+
     public partial class Item : GeometricElement
     {
         [JsonProperty("Add Id")]
         public string AddId { get; set; }
 
         public double Difficulty { get; set; }
+
+        public int Result { get; set; }
 
         [JsonIgnore]
         public bool Updated { get; set; }
@@ -26,9 +33,12 @@ namespace Elements
         [JsonIgnore]
         private static readonly HashSet<string> ExcludedProperties = new HashSet<string>
         {
+            // Properties that do not need to be tracked, aka do not impact result and are not the result
             nameof(Id),
             nameof(Self),
             nameof(Updated),
+            nameof(Material),
+            nameof(Transform),
             nameof(RepresentationInstances),
         };
 
@@ -58,13 +68,13 @@ namespace Elements
             GenerateGeometry();
 
             var newSelf = Serialize();
-            if (newSelf != this.Self)
+            var ignoreList = new HashSet<string> { "Result", "AdditionalProperties" };
+            if (!CompareJsonStrings(newSelf, this.Self, ignoreList))
             {
                 Console.WriteLine($"Updated {this.AddId}...");
                 LogDifferences(this.Self, newSelf, warnings);
                 this.Updated = true;
                 this.Locked = false;
-                this.Self = newSelf;
             }
             else
             {
@@ -113,17 +123,43 @@ namespace Elements
             if (!string.IsNullOrEmpty(Self))
             {
                 // Deserialize the JSON string to a dictionary
-                var dict = JsonConvert.DeserializeObject<Dictionary<string, object>>(Self);
-
-                // Populate the current object with the values from the dictionary
-                foreach (var kvp in dict)
+                var miniItem = JsonConvert.DeserializeObject<MiniItem>(Self);
+                if (miniItem != null)
                 {
-                    var prop = this.GetType().GetProperty(kvp.Key);
-                    if (prop != null && prop.CanWrite)
-                    {
-                        var value = Convert.ChangeType(kvp.Value, prop.PropertyType);
-                        prop.SetValue(this, value);
-                    }
+                    this.Result = miniItem.Result;
+                }
+            }
+        }
+
+        public static bool CompareJsonStrings(string json1, string json2, HashSet<string> ignoreList)
+        {
+            var dict1 = JsonConvert.DeserializeObject<Dictionary<string, object>>(json1);
+            var dict2 = JsonConvert.DeserializeObject<Dictionary<string, object>>(json2);
+
+            FilterDictionary(dict1, ignoreList);
+            FilterDictionary(dict2, ignoreList);
+
+            var token1 = JToken.FromObject(dict1);
+            var token2 = JToken.FromObject(dict2);
+
+            return JToken.DeepEquals(token1, token2);
+        }
+
+        private static void FilterDictionary(Dictionary<string, object> dict, HashSet<string> ignoreList)
+        {
+            foreach (var key in ignoreList)
+            {
+                dict.Remove(key);
+            }
+
+            // If the dictionary contains nested dictionaries, apply the filter recursively
+            foreach (var key in new List<string>(dict.Keys))
+            {
+                if (dict[key] is JObject nestedObj)
+                {
+                    var nestedDict = nestedObj.ToObject<Dictionary<string, object>>();
+                    FilterDictionary(nestedDict, ignoreList);
+                    dict[key] = nestedDict;
                 }
             }
         }

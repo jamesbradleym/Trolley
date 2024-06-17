@@ -31,6 +31,10 @@ namespace Trolley
         {
           ComplexFunction(input, item);
         }
+        else
+        {
+          item.DeserializeFromSelf();
+        }
       });
 
       output.Model.AddElements(items);
@@ -49,9 +53,10 @@ namespace Trolley
         (item, identity) => item.AddId == identity.AddId,
         (item, edit) =>
         {
+          item.Result = time;
           item.Updated = false;
           item.Locked = false;
-          item.Self = item.Self;
+          item.Self = item.Serialize();
           return item;
         }
       );
